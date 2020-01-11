@@ -1,0 +1,25 @@
+commit.template
+
+**/*.iml
+.idea
+**/.settings
+
+**/.project
+**/.classpath
+**/bin
+
+**/target
+
+**/javadocs
+
+.project
+.classpath
+
+**/checkstyle-report
+
+# Mac specific files
+**/*.DS_Store
+
+.vertx
+**/generated
+vertx-start-process.id
