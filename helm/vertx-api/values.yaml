@@ -1,0 +1,49 @@
+replicaCount: 1
+
+image:
+  repository: barb/vertx-api
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 8080
+  nodePort:
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingresss.class: nginx
+  # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: development.local
+      paths:
+        - path: /vertx-api
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+#   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

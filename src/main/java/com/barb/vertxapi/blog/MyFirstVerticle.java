@@ -70,7 +70,12 @@ public class MyFirstVerticle extends AbstractVerticle {
     if (id == null) {
       response.end(Json.encodePrettily(products.values()));
     } else {
-      response.end(Json.encodePrettily(products.get(Integer.valueOf(id))));
+      final Whisky whisky = products.get(Integer.valueOf(id));
+      if (whisky == null) {
+        response.setStatusCode(404).end();
+      } else {
+        response.end(Json.encodePrettily(whisky));
+      }
     }
 
   }

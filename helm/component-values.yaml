@@ -1,0 +1,19 @@
+vertx-api:
+  service:
+    type: NodePort
+    nodePort: 30080
+
+kafka:
+  replicas: 1
+  zookeeper:
+    replicaCount: 1
+  external:
+    enabled: true
+
+redis:
+  usePassword: false
+  cluster:
+    enabled: false
+  master:
+    persistence:
+      size: 1Gi
