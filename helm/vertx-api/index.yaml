@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  vertx-api:
+  - apiVersion: v2
+    appVersion: 1.0-SNAPSHOT
+    created: "2020-01-18T22:31:40.212667+01:00"
+    description: Rest Api built with Vertx
+    digest: d6e901d6dba7caa71426e28e0d43caf6ad053720fd47043a5a83fb6b7739d1cf
+    name: vertx-api
+    type: application
+    urls:
+    - http://127.0.0.1:8879/charts/vertx-api-1.0.0.tgz
+    version: 1.0.0
+generated: "2020-01-18T22:31:40.211556+01:00"

@@ -23,3 +23,5 @@ commit.template
 .vertx
 **/generated
 vertx-start-process.id
+
+**/*.tgz

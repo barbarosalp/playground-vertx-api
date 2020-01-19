@@ -8,29 +8,33 @@ else
     WORK_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 fi
 
-#mvn clean package
+# Variables
+HELM_LOCAL_REPO="${HOME}"/.helm/localrepo
+
+##https://github.com/jdolitsky/helm-servecm
+##helm plugin install https://github.com/jdolitsky/helm-servecm
+##helm repo add local http://127.0.0.1:8879/charts
+##helm servecm --port=8879 --context-path=/charts --storage="local" --storage-local-rootdir="/Users/barbaros.alp/projects/barb/vertx-api/helm"
+
+# Docker build
 eval $(minikube docker-env)
 docker build -t barb/vertx-api:1.0-SNAPSHOT .
-#sudo -- sh -c "echo \\$(minikube ip) development.local >> /etc/hosts"
+sudo -- sh -c "echo \\$(minikube ip) localghost >> /etc/hosts"
 
-#https://github.com/jdolitsky/helm-servecm
-#helm plugin install https://github.com/jdolitsky/helm-servecm
-#helm repo add local http://127.0.0.1:8879/charts
-#helm servecm --port=8879 --context-path=/charts --storage="local" --storage-local-rootdir="/Users/barbaros.alp/projects/barb/vertx-api/helm" & .
+# Application Chart
+helm dependency update "${WORK_DIR}"/vertx-api
+helm package "${WORK_DIR}"/vertx-api --destination "${HELM_LOCAL_REPO}"
 
-cd "${WORK_DIR}"/vertx-api
-helm dependency update
-cd ..
-
-helm package "${WORK_DIR}"/vertx-api --destination "${WORK_DIR}"
-helm repo index "${WORK_DIR}" --url http://127.0.0.1:8879/charts
+# Add application chart to local helm repo
+helm repo index "${HELM_LOCAL_REPO}" --url http://127.0.0.1:8879/charts
 helm repo update
 
-cd "${WORK_DIR}"/component
-helm dependency update
-cd ..
-helm package "${WORK_DIR}"/component --destination "${WORK_DIR}"
+# Umbrella Chart
+helm dependency update "${WORK_DIR}"/component
+helm package "${WORK_DIR}"/component --destination "${HELM_LOCAL_REPO}"
 
-helm upgrade --install component  -f "${WORK_DIR}"/component-values.yaml "${WORK_DIR}"/component-1.0.0.tgz
+# Install
+helm upgrade --install component  -f "${WORK_DIR}"/component-values.yaml "${HELM_LOCAL_REPO}"/component-1.0.0.tgz
 
+# Wait for healthcheck
 kubectl rollout status --watch=true deployment component-vertx-api --timeout=60s

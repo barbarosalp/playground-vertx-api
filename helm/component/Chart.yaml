@@ -1,0 +1,20 @@
+apiVersion: v2
+name: component
+description: Component Chart
+
+type: application
+
+version: 1.0.0
+
+appVersion: 1.0.0
+
+dependencies:
+  - name: kafka
+    version: 0.20.7
+    repository: http://storage.googleapis.com/kubernetes-charts-incubator
+  - name: redis
+    version: 10.3.4
+    repository: "@stable"
+  - name: vertx-api
+    version: 1.0.0
+    repository: "@local"
