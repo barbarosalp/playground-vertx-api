@@ -7,6 +7,7 @@
   <groupId>com.barb</groupId>
   <artifactId>vertx-api</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <name>vertx-api</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -200,6 +201,7 @@
             </goals>
             <configuration>
               <systemProperties>
+                <it.http.host>localghost</it.http.host>
                 <it.http.port>30080</it.http.port>
               </systemProperties>
             </configuration>

@@ -13,7 +13,6 @@ public class Consts {
   public static final String KAFKA_PORT = "KAFKA_PORT";
   public static final String KAFKA_TOPIC_NAME = "KAFKA_TOPIC_NAME";
 
-  public static final String DATA_EVENT_BUS = "DATA_EVENT_BUS";
-  public static final String HANDLER_EVENT_BUS = "HANDLER_EVENT_BUS";
-  public static final String DATA_EVENT_BUS_API = "DATA_EVENT_BUS_API";
+  public static final String EVENT_BUS_HANDLER = "HANDLER_EVENT_BUS";
+  public static final String EVENT_BUS_DATA_API = "DATA_EVENT_BUS_API";
 }

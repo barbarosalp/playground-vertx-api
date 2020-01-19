@@ -17,6 +17,9 @@ HELM_LOCAL_REPO="${HOME}"/.helm/localrepo
 ##helm servecm --port=8879 --context-path=/charts --storage="local" --storage-local-rootdir="/Users/barbaros.alp/projects/barb/vertx-api/helm" &
 #sudo -- sh -c "echo \\$(minikube ip) localghost >> /etc/hosts"
 
+# Package application
+mvn clean package -DskipTests
+
 # Docker build
 eval $(minikube docker-env)
 docker build -t barb/vertx-api:1.0-SNAPSHOT .

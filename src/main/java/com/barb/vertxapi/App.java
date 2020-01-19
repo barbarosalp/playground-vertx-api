@@ -1,5 +1,6 @@
 package com.barb.vertxapi;
 
+import com.barb.vertxapi.verticles.DataVerticle;
 import com.barb.vertxapi.verticles.HttpVerticle;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
@@ -26,6 +27,7 @@ public class App {
 
     retriever.rxGetConfig()
         .map(config -> new DeploymentOptions().setConfig(config))
+        .flatMap(options -> vertx.rxDeployVerticle(DataVerticle.class.getName(), options).map(any -> options))
         .flatMap(options -> vertx.rxDeployVerticle(HttpVerticle.class.getName(), options).map(any -> options))
         .subscribe(
             deployId -> System.out.println("App started successfully!"),

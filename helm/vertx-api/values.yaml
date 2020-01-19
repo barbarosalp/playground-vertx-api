@@ -29,7 +29,7 @@ service:
 ingress:
   enabled: false
   annotations: {}
-    # kubernetes.io/ingresss.class: nginx
+  # kubernetes.io/ingresss.class: nginx
   # kubernetes.io/tls-acme: "true"
   hosts:
     - host: development.local
@@ -40,13 +40,13 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-#   memory: 128Mi
+resources:
+  limits:
+    cpu: 1
+    memory: 500Mi
+  requests:
+    cpu: 500m
+    memory: 256Mi
 
 nodeSelector: {}
 

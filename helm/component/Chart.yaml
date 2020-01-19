@@ -11,9 +11,10 @@ dependencies:
   - name: kafka
     version: 0.20.7
     repository: http://storage.googleapis.com/kubernetes-charts-incubator
+    condition: kafka.enabled
   - name: redis
     version: 10.3.4
     repository: "@stable"
   - name: vertx-api
-    version: 1.0.0
+    version: 1.0.1
     repository: "@local"

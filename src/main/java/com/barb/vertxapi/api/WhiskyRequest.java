@@ -1,14 +1,21 @@
-package com.barb.vertxapi.domain;
+package com.barb.vertxapi.api;
 
-public class Whisky {
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-  private int id;
+public class WhiskyRequest {
 
   private String name;
-
   private String origin;
 
-  public Whisky(String name, String origin) {
+  @JsonIgnore
+  private int id;
+
+  @JsonCreator
+  public WhiskyRequest(
+      @JsonProperty("name") String name,
+      @JsonProperty("origin") String origin) {
     this.name = name;
     this.origin = origin;
   }
