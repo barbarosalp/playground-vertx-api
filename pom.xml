@@ -51,6 +51,22 @@
       <artifactId>vertx-web-client</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-rx-java2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-config</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-redis-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-kafka-client</artifactId>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
@@ -68,6 +84,13 @@
   </dependencies>
 
   <build>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
 
     <testResources>
       <testResource>
@@ -126,7 +149,7 @@
                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <manifestEntries>
                     <Main-Class>com.barb.vertxapi.App</Main-Class>
-                    <Main-Verticle>com.barb.vertxapi.blog.MyFirstVerticle</Main-Verticle>
+                    <Main-Verticle>com.barb.vertxapi.verticles.HttpVerticle</Main-Verticle>
                   </manifestEntries>
                 </transformer>
               </transformers>

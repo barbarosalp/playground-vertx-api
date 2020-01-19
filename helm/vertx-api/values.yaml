@@ -15,6 +15,12 @@ podSecurityContext: {}
 
 securityContext: {}
 
+config:
+  kafka_host: kafka
+  kafka_port: 9092
+  redis_host: redis
+  redis_port: 6379
+
 service:
   type: ClusterIP
   port: 8080

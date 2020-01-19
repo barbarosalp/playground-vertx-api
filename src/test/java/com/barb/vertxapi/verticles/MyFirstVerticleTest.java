@@ -1,4 +1,4 @@
-package com.barb.vertxapi.blog;
+package com.barb.vertxapi.verticles;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -28,7 +28,7 @@ public class MyFirstVerticleTest {
     vertx = Vertx.vertx();
     port = getRandomPort();
     final DeploymentOptions options = new DeploymentOptions().setConfig(new JsonObject().put("http.port", port));
-    vertx.deployVerticle(MyFirstVerticle.class.getName(), options, context.asyncAssertSuccess());
+    vertx.deployVerticle(HttpVerticle.class.getName(), options, context.asyncAssertSuccess());
   }
 
   private int getRandomPort() throws IOException {

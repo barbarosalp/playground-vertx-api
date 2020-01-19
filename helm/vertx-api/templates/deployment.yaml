@@ -27,6 +27,15 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: KAFKA_HOST
+              value: "{{ .Values.config.kafka_host }}"
+            - name: KAFKA_PORT
+              value: "{{ .Values.config.kafka_port }}"
+            - name: REDIS_HOST
+              value: "{{ .Values.config.redis_host }}"
+            - name: REDIS_PORT
+              value: "{{ .Values.config.redis_port }}"
           ports:
             - name: http
               containerPort: 8080

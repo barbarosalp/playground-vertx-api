@@ -1,19 +1,22 @@
-package com.barb.vertxapi.blog;
+package com.barb.vertxapi.verticles;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.barb.vertxapi.domain.Whisky;
-import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Promise;
-import io.vertx.core.http.HttpServerRequest;
-import io.vertx.core.http.HttpServerResponse;
-import io.vertx.core.json.Json;
-import io.vertx.ext.web.Router;
-import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.BodyHandler;
 
-public class MyFirstVerticle extends AbstractVerticle {
+import com.barb.vertxapi.utils.Consts;
+import io.vertx.core.Promise;
+
+import io.vertx.core.json.Json;
+import io.vertx.reactivex.core.AbstractVerticle;
+import io.vertx.reactivex.core.http.HttpServerRequest;
+import io.vertx.reactivex.core.http.HttpServerResponse;
+import io.vertx.reactivex.ext.web.Router;
+import io.vertx.reactivex.ext.web.RoutingContext;
+import io.vertx.reactivex.ext.web.handler.BodyHandler;
+
+public class HttpVerticle extends AbstractVerticle {
 
   private Map<Integer, Whisky> products = createSomeData();
 
@@ -29,9 +32,11 @@ public class MyFirstVerticle extends AbstractVerticle {
     router.post("/api/whiskies").handler(this::addWhiskyHandler);
     router.delete("/api/whiskies/:id").handler(this::deleteWhiskyHandler);
 
+    final Integer applicationPort = config().getInteger(Consts.APPLICATION_PORT, 8080);
+
     vertx.createHttpServer()
         .requestHandler(router)
-        .listen(config().getInteger("http.port", 8080), result -> {
+        .listen(applicationPort, result -> {
           if (result.succeeded()) {
             promise.complete();
           } else {

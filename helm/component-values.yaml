@@ -2,11 +2,19 @@ vertx-api:
   service:
     type: NodePort
     nodePort: 30080
+  config:
+    kafka_host: component-kafka
+    kafka_port: 9092
+    redis_host: component-redis-master
+    redis_port: 6379
 
 kafka:
   replicas: 1
+  persistence:
+    size: 256Mi
   zookeeper:
     replicaCount: 1
+    storage: 256Mi
   external:
     enabled: true
 
@@ -16,4 +24,7 @@ redis:
     enabled: false
   master:
     persistence:
-      size: 1Gi
+      size: 256Mi
+  slave:
+    persistence:
+      size: 256Mi
