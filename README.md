@@ -1,6 +1,8 @@
 # Setup
 
-A simple vertx api along with the helm packages. Follow the steps below to build and deploy it.
+A simple vertx api along with the helm packages. Follow the steps below to build and deploy it.  
+
+Benchmark [results](./helm/benchmark-result.txt).
 
 ## Prerequisites
 
@@ -36,6 +38,11 @@ Start the k8s cluster
 minikube start --memory 8192 --cpus 6 --vm-driver=virtualbox
 ```
 
+Enable metrics-server
+```shell
+minikube addons enable metrics-server
+```
+
 Add host entry for the minikube cluster
 ```shell
 sudo -- sh -c "echo \\$(minikube ip) localghost >> /etc/hosts"
@@ -63,5 +70,5 @@ From the root of the project:
 
 - Benchmark
 ```shell
-./helm/benchmark.sh
+./helm/benchmark.sh > ./helm/benchmark-result.txt
 ```

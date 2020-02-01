@@ -1,6 +1,6 @@
 #!/bin/bash
 
-hey -c 30 -z 30s \
+hey -c 50 -z 1m \
 -T "application/json" \
 -m POST \
 -D ./helm/request.json \
