@@ -11,12 +11,6 @@ fi
 # Variables
 HELM_LOCAL_REPO="${HOME}"/.helm/localrepo
 
-##https://github.com/jdolitsky/helm-servecm
-##helm plugin install https://github.com/jdolitsky/helm-servecm
-##helm repo add local http://127.0.0.1:8879/charts
-##helm servecm --port=8879 --context-path=/charts --storage="local" --storage-local-rootdir="/Users/barbaros.alp/projects/barb/vertx-api/helm" &
-#sudo -- sh -c "echo \\$(minikube ip) localghost >> /etc/hosts"
-
 # Package application
 mvn clean package -DskipTests
 

@@ -1,2 +1,2 @@
 #!/bin/bash
-helm uninstall vertx-api
+helm uninstall component
