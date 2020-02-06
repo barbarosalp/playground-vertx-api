@@ -55,8 +55,15 @@ helm plugin install https://github.com/jdolitsky/helm-servecm
 ```
 
 Start the local repo server
-```
+```shell
 helm servecm --port=8879 --context-path=/charts --storage="local" --storage-local-rootdir="${HOME}/.helm/localrepo"
+```
+
+Add stable, incubator and @local repos.
+```shell
+helm repo add stable https://kubernetes-charts.storage.googleapis.com
+helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
+helm repo add @local http://127.0.0.1:8879/charts
 ```
 
 ### Build, Deploy and Benchmark
