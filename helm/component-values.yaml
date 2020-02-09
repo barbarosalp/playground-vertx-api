@@ -1,4 +1,5 @@
 vertx-api:
+  enabled: true
   replicaCount: 1
   image:
     pullPolicy: Never
@@ -35,6 +36,9 @@ redis:
     enabled: false
   master:
     disableCommands: []
+    service:
+      type: NodePort
+      nodePort: 30379
     resources:
       limits:
         cpu: 1

@@ -3,16 +3,14 @@ package com.barb.vertxapi.verticles;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import com.barb.vertxapi.domain.Whisky;
 import com.barb.vertxapi.utils.Consts;
 import io.vertx.core.DeploymentOptions;
-import io.vertx.core.Vertx;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.unit.Async;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
-import io.vertx.ext.web.client.WebClient;
+import io.vertx.reactivex.core.Vertx;
+import io.vertx.reactivex.ext.web.client.WebClient;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +19,7 @@ import org.junit.runner.RunWith;
 @RunWith(VertxUnitRunner.class)
 public class HttpVerticleTest {
 
+  public static final int ONE_SECOND = 1000;
   private Vertx vertx;
   private Integer port;
 
@@ -49,33 +48,33 @@ public class HttpVerticleTest {
 
     final Async async = context.async();
 
-    WebClient client = WebClient.create(vertx);
-    client
+    WebClient.create(vertx)
         .get(port, "localhost", "/")
-        .send(r -> {
-          if (r.succeeded()) {
-            context.assertTrue(r.result().bodyAsString().contains("Hello"));
-            async.complete();
-          }
-        });
+        .rxSend()
+        .subscribe(
+            response -> {
+              context.assertTrue(response.bodyAsString().contains("Hello"));
+              async.complete();
+            });
+    async.awaitSuccess(ONE_SECOND);
   }
 
-//  @Test
-//  public void testAddWhiskyShouldWork(final TestContext context) {
-//    final Async async = context.async();
-//    WebClient client = WebClient.create(vertx);
-//    final Whisky body = new Whisky("Barbaros", "Kusadasi, Turkey");
-//    client
-//        .post(port, "localhost", "/api/whiskies")
-//        .putHeader("content-type", "application/json")
-//        .sendJson(body, r -> {
-//          context.assertEquals(r.result().statusCode(), 201);
-//          context.assertTrue(r.result().headers().get("content-type").contains("application/json"));
-//
-//          final Whisky whisky = Json.decodeValue(r.result().bodyAsString(), Whisky.class);
-//          context.assertEquals(whisky.getName(), "Barbaros");
-//          context.assertEquals(whisky.getOrigin(), "Kusadasi, Turkey");
-//          async.complete();
-//        });
-//  }
+  //  @Test
+  //  public void testAddWhiskyShouldWork(final TestContext context) {
+  //    final Async async = context.async();
+  //    WebClient client = WebClient.create(vertx);
+  //    final Whisky body = new Whisky("Barbaros", "Kusadasi, Turkey");
+  //    client
+  //        .post(port, "localhost", "/api/whiskies")
+  //        .putHeader("content-type", "application/json")
+  //        .sendJson(body, r -> {
+  //          context.assertEquals(r.result().statusCode(), 201);
+  //          context.assertTrue(r.result().headers().get("content-type").contains("application/json"));
+  //
+  //          final Whisky whisky = Json.decodeValue(r.result().bodyAsString(), Whisky.class);
+  //          context.assertEquals(whisky.getName(), "Barbaros");
+  //          context.assertEquals(whisky.getOrigin(), "Kusadasi, Turkey");
+  //          async.complete();
+  //        });
+  //  }
 }

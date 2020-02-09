@@ -18,3 +18,4 @@ dependencies:
   - name: vertx-api
     version: 1.0.1
     repository: "@local"
+    condition: vertx-api.enabled

@@ -7,6 +7,7 @@ import io.vertx.core.Promise;
 import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.core.AbstractVerticle;
+import io.vertx.reactivex.core.eventbus.Message;
 import io.vertx.reactivex.core.http.HttpServerRequest;
 import io.vertx.reactivex.core.http.HttpServerResponse;
 import io.vertx.reactivex.ext.web.Router;
@@ -23,7 +24,6 @@ public class HttpVerticle extends AbstractVerticle {
     router.route().handler(BodyHandler.create());
 
     router.route("/").handler(this::indexHandler);
-    router.get("/api/whiskies").handler(this::getWhiskiesHandler);
     router.get("/api/whiskies/:id").handler(this::getWhiskiesHandler);
     router.post("/api/whiskies").handler(this::addWhiskyHandler);
     router.delete("/api/whiskies/:id").handler(this::deleteWhiskyHandler);
@@ -50,21 +50,20 @@ public class HttpVerticle extends AbstractVerticle {
     final HttpServerRequest request = rc.request();
     final HttpServerResponse response = rc.response();
     final String id = request.getParam("id");
+
     response
         .putHeader("content-type", "application/json; charset=utf-8");
 
-    //    if (id == null) {
-    //      response.end(Json.encodePrettily(products.values()));
-    //    } else {
-    //      final Whisky whisky = products.get(Integer.valueOf(id));
-    //      if (whisky == null) {
-    //        response.setStatusCode(404).end();
-    //      } else {
-    //        response.end(Json.encodePrettily(whisky));
-    //      }
-    //    }
-
-    response.end();
+    Single.just(id)
+        .flatMap(whiskyId -> {
+          final DeliveryOptions options = new DeliveryOptions().addHeader("action", "get").setSendTimeout(100);
+          return vertx.eventBus().<JsonObject>rxRequest(Consts.EVENT_BUS_DATA_API, new JsonObject().put("id", whiskyId), options);
+        })
+        .map(Message::body)
+        .subscribe(
+            body -> response.setStatusCode(200).end(body.encode()),
+            error -> response.setStatusCode(404).end()
+        );
   }
 
   private void addWhiskyHandler(final RoutingContext rc) {
